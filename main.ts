@@ -19,14 +19,16 @@ let contents: Buffer;
 try {
   contents = readFileSync(sourcePath);
 } catch (err) {
-  console.error(`cannot read ${sourceName} from bot directory ${botDir}: ${(err as Error).message}`);
+  const code = (err as NodeJS.ErrnoException).code;
+  const reason = code === "ENOENT" ? "no such file" : (err as Error).message;
+  console.error(`error: could not read ${sourcePath} (${reason})`);
   process.exit(1);
 }
 
 try {
   mkdirSync(outputDir, { recursive: true });
 } catch (err) {
-  console.error(`cannot create output directory ${outputDir}: ${(err as Error).message}`);
+  console.error(`error: could not create output directory ${outputDir} (${(err as Error).message})`);
   process.exit(1);
 }
 
