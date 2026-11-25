@@ -1,8 +1,8 @@
 // Copy POST.json from the bot directory into the output directory.
 // Reads MAKEFUN_BOT_DIR / MAKEFUN_OUTPUT_DIR (falling back to /bot and /output),
 // creating the output dir as needed and failing loudly if the source is unreadable.
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import { join } from "node:path";
+const { readFileSync, writeFileSync, mkdirSync } = require("node:fs");
+const { join } = require("node:path");
 
 const envOr = (name: string, fallback: string): string => {
   const value = process.env[name];
